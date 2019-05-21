@@ -92,7 +92,7 @@ services:
   - docker
   
 script:
-  - npm install
+  - echo "Use Docker !"
 
 after_success:
   - pip install --user awscli
