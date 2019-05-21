@@ -88,11 +88,14 @@ notifications:
     on_start: never
     on_pull_requests: false
     
+env:
+ - IMAGE_NAME=835827978632.dkr.ecr.us-east-2.amazonaws.com/juice:latest
+    
 services:
   - docker
   
 script:
-  - echo "Use Docker !"
+  - echo 'Use Docker !'
 
 after_success:
   - pip install --user awscli
@@ -100,4 +103,6 @@ after_success:
   - docker build -t juice .
   - docker tag juice:latest 835827978632.dkr.ecr.us-east-2.amazonaws.com/juice:latest
   - docker push 835827978632.dkr.ecr.us-east-2.amazonaws.com/juice:latest
+  - aws cloudformation deploy --template-file ./ecs-task.yaml --stack-name ecs-deployment --region us-east-2 --parameter-override ImageName=$IMAGE_NAME
+  - aws cloudformation update-stack --template-body file://./ecs-task.yaml --stack-name ecs-deployment --region us-east-2 --parameters "ParameterKey=ImageName,ParameterValue=$IMAGE_NAME"
 
