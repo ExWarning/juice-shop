@@ -3,7 +3,7 @@ node_js:
   - 11
     
 env:
- - IMAGE_NAME=835827978632.dkr.ecr.us-east-2.amazonaws.com/juice:latest
+ - IMAGE_NAME=835827978632.dkr.ecr.us-east-2.amazonaws.com/juice:1.0-$TRAVIS_BUILD_NUMBER
     
 services:
   - docker
